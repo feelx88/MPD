@@ -218,6 +218,15 @@ Player Settings
 
    Put MPD into pause mode instead of starting playback after startup.
 
+.. confval:: pause_as_stop_for_radio
+   :type: ``yes`` or ``no``
+   :default: ``no``
+
+   If set to ``yes``, then the :command:`pause` command is treated as
+   a :command:`stop` command for streams that are not seekable (e.g.
+   radio streams). This prevents MPD from continuing to buffer or
+   download data while paused.
+
 
 Other Settings
 ^^^^^^^^^^^^^^

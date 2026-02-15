@@ -52,6 +52,7 @@ PlayerConfig::PlayerConfig(const ConfigData &config)
 		 return ParseAudioFormat(s, true);
 	 })),
 	 replay_gain(config),
-	 mixramp_analyzer(config.GetBool(ConfigOption::MIXRAMP_ANALYZER, false))
+	 mixramp_analyzer(config.GetBool(ConfigOption::MIXRAMP_ANALYZER, false)),
+	 pause_as_stop_for_radio(config.GetBool(ConfigOption::PAUSE_AS_STOP_FOR_RADIO, false))
 {
 }

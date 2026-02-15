@@ -794,18 +794,45 @@ Player::ProcessCommand(std::unique_lock<Mutex> &lock) noexcept
 		break;
 
 	case PlayerCommand::PAUSE:
+		if (!paused && pc.config.pause_as_stop_for_radio && !dc.seekable) {
+			/* treat pause as stop for unseekable streams:
+			   close the decoder and clear the pipe, but stay in
+			   PAUSE state */
+			StopDecoder(lock);
+			pipe->Clear();
+			paused = true;
+			pc.state = PlayerState::PAUSE;
+
+			const ScopeUnlock unlock(pc.mutex);
+			pc.outputs.Pause();
+			pc.CommandFinished();
+			break;
+		}
+
 		paused = !paused;
 		if (paused) {
 			pc.state = PlayerState::PAUSE;
 
 			const ScopeUnlock unlock(pc.mutex);
 			pc.outputs.Pause();
-		} else if (!play_audio_format.IsDefined()) {
-			/* the decoder hasn't provided an audio format
-			   yet - don't open the audio device yet */
-			pc.state = PlayerState::PLAY;
 		} else {
-			OpenOutput();
+			if (dc.IsIdle() && song != nullptr) {
+				/* if the decoder was stopped during pause,
+				   restart it now */
+				pc.next_song = std::make_unique<DetachedSong>(*song);
+				queued = true;
+				StartDecoder(lock, pipe, false);
+				ActivateDecoder();
+				buffering = true;
+			}
+
+			if (!play_audio_format.IsDefined()) {
+				/* the decoder hasn't provided an audio format
+				   yet - don't open the audio device yet */
+				pc.state = PlayerState::PLAY;
+			} else {
+				OpenOutput();
+			}
 		}
 
 		pc.CommandFinished();

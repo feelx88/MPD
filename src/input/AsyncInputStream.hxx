@@ -85,7 +85,7 @@ protected:
 	void SetTag(std::unique_ptr<Tag> _tag) noexcept;
 	void ClearTag() noexcept;
 
-	void Pause() noexcept;
+	virtual void Pause() noexcept;
 
 	bool IsPaused() const noexcept {
 		return paused;

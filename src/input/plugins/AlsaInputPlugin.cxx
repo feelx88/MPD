@@ -110,7 +110,7 @@ private:
 	void OpenDevice(const AudioFormat &audio_format);
 	void ConfigureCapture(AudioFormat audio_format);
 
-	void Pause() {
+	void Pause() noexcept {
 		AsyncInputStream::Pause();
 		InvalidateSockets();
 	}

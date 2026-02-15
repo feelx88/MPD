@@ -58,6 +58,7 @@ const ConfigTemplate config_param_templates[] = {
 	{ "auto_update" },
 	{ "auto_update_depth" },
 	{ "mixramp_analyzer" },
+	{ "pause_as_stop_for_radio" },
 };
 
 static constexpr unsigned n_config_param_templates =

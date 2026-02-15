@@ -62,6 +62,8 @@ enum class ConfigOption {
 
 	MIXRAMP_ANALYZER,
 
+	PAUSE_AS_STOP_FOR_RADIO,
+
 	MAX
 };
 

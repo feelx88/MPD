@@ -25,6 +25,8 @@ struct PlayerConfig {
 
 	bool mixramp_analyzer = false;
 
+	bool pause_as_stop_for_radio = false;
+
 	PlayerConfig() = default;
 
 	explicit PlayerConfig(const ConfigData &config);

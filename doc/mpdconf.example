@@ -104,6 +104,12 @@
 #
 #restore_paused "no"
 #
+# Setting "pause_as_stop_for_radio" to "yes" makes the "pause" command
+# act like "stop" for unseekable streams (like radio), preventing
+# background buffering while paused.
+#
+#pause_as_stop_for_radio "no"
+#
 # This setting enables MPD to create playlists in a format usable by other
 # music players.
 #
